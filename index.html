@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevFlow AI | Agentic Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<header onclick="goToHome()">
+  <div class="logo">
+    <div class="logo-icon">DF</div>
+    <div class="logo-text">Dev<span>Flow</span> AI</div>
+  </div>
+  <div class="header-right">
+    <div class="status-pill">Agent Online</div>
+    <div class="header-badge">Agentic AI Hackathon 2026</div>
+  </div>
+</header>
+</head>
+
+<body>
+<!-- HOME VIEW — unchanged from original -->
+<div id="homeView" class="view active">
+  <div class="hero">
+    <h1>Describe your workflow.<br><span>AI builds it for you.</span></h1>
+    <p>Type any repetitive dev task in plain English. DevFlow AI uses Llama 3.3 via Groq to plan, execute, and automate workflows instantly.</p>
+    <button class="btn-primary" onclick="goToChat()">Get Started</button>
+  </div>
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="about-card-icon">🧠</div>
+      <h3>Agentic Execution</h3>
+      <p>Not just code generation — a true agent that plans, executes each step live, and shows you results in real time.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-card-icon">⚡</div>
+      <h3>Powered by Llama 3.3</h3>
+      <p>Blazing fast workflow generation via Groq's LPU architecture, delivering complex automations in milliseconds.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-card-icon">📊</div>
+      <h3>Visual Workflows</h3>
+      <p>Every task becomes an interactive step-by-step execution log. Watch each step light up as the agent completes it.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-card-icon">🔒</div>
+      <h3>Human-in-the-Loop</h3>
+      <p>Before sensitive actions like sending emails, the agent pauses and asks your approval — you stay in control.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT VIEW — same layout, enhanced internals -->
+<div id="chatView" class="view">
+  <div class="chat-container" id="chatbox">
+    <div class="msg-row ai">
+      <div class="msg-bubble">
+        <div class="ai-header">
+          <div class="ai-avatar">DF</div>
+          <div class="ai-name">DevFlow AI</div>
+        </div>
+        <div class="ai-text">Hello! I'm your agentic workflow assistant. Describe any task — I'll plan it visually, execute each step live, and ask your permission before any sensitive actions like sending emails.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-wrapper">
+    <div class="input-container">
+      <div class="examples">
+        <button class="example-chip" onclick="fillAndSend('Check current weather in Chennai and send a summary email to my team')">🌤 Weather → Email</button>
+        <button class="example-chip" onclick="fillAndSend('Send an email to john@example.com with subject Meeting Tomorrow and body Please confirm attendance')">✉ Send Email</button>
+        <button class="example-chip" onclick="fillAndSend('Create a Python script to pull from GitHub and run pytest')">⚙ GitHub CI/CD test</button>
+        <button class="example-chip" onclick="fillAndSend('Clean a CSV file by removing duplicates and nulls')">📄 CSV Data Cleaner</button>
+      </div>
+      <div class="chat-input-box">
+        <textarea id="taskInput" rows="1" placeholder="Describe a workflow to execute... (e.g. send an email, search something)" onkeydown="handleEnter(event)"></textarea>
+        <button class="btn-send" id="sendBtn" onclick="sendMessage()">
+          <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EMAIL MODAL -->
+<div class="modal-overlay" id="emailModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">📧 Send this email?</div>
+      <div class="modal-sub">The agent wants to send the following email via your mail client.</div>
+    </div>
+    <div class="email-preview">
+      <div class="email-row"><span class="email-label">To</span><span class="email-val" id="modalTo"></span></div>
+      <div class="email-row"><span class="email-label">Subject</span><span class="email-val" id="modalSubject"></span></div>
+      <div class="email-row"><span class="email-label">Body</span><span class="email-val" id="modalBody"></span></div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-modal-cancel" onclick="resolveEmail(false)">Cancel</button>
+      <button class="btn-modal-confirm" onclick="resolveEmail(true)">✓ Send Email</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
